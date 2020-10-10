@@ -2,8 +2,9 @@ const app = Vue.createApp({
   data() {
     return {
       product: "Socks",
-      image: "./assets/images/socks_green.jpg",
-      url: "https://theabsurdist.dev",
+      image: "./assets/images/socks_blue.jpg",
+      inventory: 100,
+      onSale: true,
     };
   },
 });
