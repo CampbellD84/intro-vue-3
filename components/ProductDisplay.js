@@ -34,18 +34,10 @@ app.component("product-display", {
             >
               Add to Cart
             </button>
-            <!-- Challenge Solution -->
-            <button
-              class="button"
-              :class="{ disabledButton: !inStock }"
-              :disabled="!inStock"
-              @click="removeFromCart"
-            >
-              Remove Item
-            </button>
-            <!-- Challenge Solution -->
           </div>
         </div>
+        <review-list v-if="reviews.length" :reviews="reviews"></review-list>
+        <review-form @review-submitted="addReview"></review-form>
       </div>`,
   data() {
     return {
@@ -67,6 +59,7 @@ app.component("product-display", {
           quantity: 0,
         },
       ],
+      reviews: [],
     };
   },
   methods: {
@@ -76,8 +69,8 @@ app.component("product-display", {
     updateVariant(index) {
       this.selectedVariant = index;
     },
-    removeFromCart() {
-      this.$emit("remove-from-cart", this.variants[this.selectedVariant].id);
+    addReview(review) {
+      this.reviews.push(review);
     },
   },
   computed: {

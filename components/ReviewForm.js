@@ -1,0 +1,66 @@
+app.component("review-form", {
+  template: /*html*/ `
+        <form class="review-form" @submit.prevent="onSubmit">
+        <h3></h3>
+        <label for="name">Name:</label>
+        <input id="name" v-model="name"/>
+
+        <label for="review">Review:</label>
+        <textarea id="review" v-model="review"/>
+
+        <label for="rating">Rating:</label>
+        <select id="rating" v-model.number="rating">
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+        </select>
+        <!-- Challenge Solution -->
+        <label for="recommend">Would you recommend this product?</label>
+        <select id="recommend" v-model="recommend">
+            <option>Yes</option>
+            <option>No</option>
+        </select>
+        <!-- Challenge Solution -->
+
+        <input class="button" type="submit" value="Submit" />
+    </form>
+    `,
+  data() {
+    return {
+      name: "",
+      review: "",
+      rating: null,
+      // Challenge Solution
+      recommend: null,
+      // Challenge Solution
+    };
+  },
+  methods: {
+    onSubmit() {
+      if (
+        this.name === "" ||
+        this.review === "" ||
+        this.rating === null ||
+        this.recommend === null
+      ) {
+        alert("Review is incomplete. Please fill out every field.");
+        return;
+      }
+
+      let productReview = {
+        name: this.name,
+        review: this.review,
+        rating: this.rating,
+        recommend: this.recommend, // Challenge Solution
+      };
+      this.$emit("review-submitted", productReview);
+
+      this.name = "";
+      this.review = "";
+      this.rating = null;
+      this.recommend = null; // Challenge Solution
+    },
+  },
+});
