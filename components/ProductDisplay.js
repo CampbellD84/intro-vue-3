@@ -16,9 +16,9 @@ app.component("product-display", {
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
             <p>Shipping: {{ shipping }}</p>
-                <!-- Challenge Solution-->
-                <product-details :details="details"></product-details>
-                <!-- Challenge Solution-->
+            <ul>
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
             <div
               v-for="(variant, index) in variants"
               :key="variant.id"
@@ -34,6 +34,16 @@ app.component("product-display", {
             >
               Add to Cart
             </button>
+            <!-- Challenge Solution -->
+            <button
+              class="button"
+              :class="{ disabledButton: !inStock }"
+              :disabled="!inStock"
+              @click="removeFromCart"
+            >
+              Remove Item
+            </button>
+            <!-- Challenge Solution -->
           </div>
         </div>
       </div>`,
@@ -61,10 +71,13 @@ app.component("product-display", {
   },
   methods: {
     addToCart() {
-      this.cart += 1;
+      this.$emit("add-to-cart", this.variants[this.selectedVariant].id);
     },
     updateVariant(index) {
       this.selectedVariant = index;
+    },
+    removeFromCart() {
+      this.$emit("remove-from-cart", this.variants[this.selectedVariant].id);
     },
   },
   computed: {
